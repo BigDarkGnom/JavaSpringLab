@@ -1,0 +1,82 @@
+<!-- src/main/resources/templates/owner-form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Форма хозяина</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e; }
+    input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 10px; border: 1px solid #bdc3c7; border-radius: 4px; box-sizing: border-box; }
+    .error { color: #e74c3c; font-size: 12px; margin-top: 5px; }
+    button { background: #3498db; color: white; padding: 12px 30px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #2980b9; }
+    .back-link { display: inline-block; margin-top: 20px; color: #3498db; text-decoration: none; }
+    .checkbox-group { margin: 15px 0; }
+    .checkbox-group label { display: inline; font-weight: normal; }
+    input[type="checkbox"] { margin-right: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>👥 Добавить хозяина</h2>
+
+  <form th:action="@{/owners/save}" th:object="${owner}" method="post">
+
+    <div class="form-group">
+      <label for="fullName">ФИО:</label>
+      <input type="text" id="fullName" th:field="*{fullName}" placeholder="Иванов Иван Иванович" />
+      <div class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Телефон:</label>
+      <input type="tel" id="phone" th:field="*{phone}" placeholder="+7 (999) 000-00-00" />
+      <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" th:field="*{email}" placeholder="example@mail.ru" />
+      <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+
+    <!-- Checkbox для демонстрации -->
+    <div class="checkbox-group">
+      <input type="checkbox" id="contactPreferred" name="contactPreferred" />
+      <label for="contactPreferred">Предпочитаемый способ связи - Email</label>
+    </div>
+
+    <!-- Radiobutton для демонстрации -->
+    <div class="form-group">
+      <label>Тип владельца:</label>
+      <div>
+        <input type="radio" id="individual" name="ownerType" value="individual" checked />
+        <label for="individual">Частное лицо</label>
+        <input type="radio" id="organization" name="ownerType" value="organization" style="margin-left: 20px;" />
+        <label for="organization">Организация</label>
+      </div>
+    </div>
+
+    <!-- Select для демонстрации -->
+    <div class="form-group">
+      <label for="city">Город:</label>
+      <select id="city" name="city">
+        <option value="">-- Выберите город --</option>
+        <option value="moscow">Москва</option>
+        <option value="spb">Санкт-Петербург</option>
+        <option value="ekb">Екатеринбург</option>
+        <option value="kazan">Казань</option>
+      </select>
+    </div>
+
+    <button type="submit">💾 Сохранить</button>
+  </form>
+
+  <a href="/owners/list" class="back-link">← Вернуться к списку</a>
+</div>
+</body>
+</html>
